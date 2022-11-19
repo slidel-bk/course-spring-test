@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>7.0</version>
+			<version>8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
@@ -71,6 +71,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<!--<dependency>
 			<groupId>io.springfox</groupId>
@@ -89,7 +94,45 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+				<usr>${userdb}</usr>
+				<pass>${passdb}</pass>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>pro</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>pro</spring.profiles.active>
+				<usr>${userdb}</usr>
+				<pass>${passdb}</pass>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>prepro</id>
+			<properties>
+				<spring.profiles.active>prepro</spring.profiles.active>
+				<usr>${userdb}</usr>
+				<pass>${passdb}</pass>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -1,0 +1,64 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Eso es!</title>
+    </h:head>
+    <h:body>
+
+        <style type="text/css">
+        .custom-padding.ui-panelgrid .ui-panelgrid-cell  {
+            padding-left:0px;
+            padding-right:0px;
+            align-self: center;
+        }
+        </style>
+        <h:form id="frmPrincipal">
+            <p:panel header="Autores"
+                     style="width:1000px;
+                            margin-left:auto;
+                            margin-right:auto;">
+
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder custom-padding"
+                                 columnClasses="ui-grid-col-2,ui-grid-col-4">
+                        <p:outputLabel value="Nombre:*"/>
+                        <p:inputText/>
+
+                        <p:outputLabel value="Apellido:*"/>
+                        <p:inputText/>
+
+                        <p:outputLabel value="Telefono:*"/>
+                        <p:inputText/>
+
+                        <p:outputLabel value="Código postal:"/>
+                        <p:inputText/>
+
+                        <p:outputLabel value="Departamento:"/>
+                        <p:inputText maxlength="2"/>
+
+                        <p:outputLabel value="Ciudad:"/>
+                        <p:inputText />
+                    </p:panelGrid>
+
+                <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder custom-padding"
+                             columnClasses="ui-grid-col-2,ui-grid-col-10">
+                    <p:outputLabel value="Dirección:"/>
+                    <p:inputTextarea rows="2" style="width:98%;"/>
+                </p:panelGrid>
+
+                <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder custom-padding"
+                             columnClasses="ui-grid-col-2,ui-grid-col-10">
+                    <p:outputLabel value="Estado:"/>
+                    <p:selectBooleanButton onLabel="Si" offLabel="No" style="width:5rem"/>
+                </p:panelGrid>
+
+                <p:outputPanel deferred="true" style="text-align:center">
+                    <p:commandButton value="Guardar" />
+                    <p:commandButton value="Limpiar" style="margin-left:5px;"/>
+                </p:outputPanel>
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</f:view>
