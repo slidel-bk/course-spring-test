@@ -26,7 +26,7 @@ public class AutorService {
         return autorCrud.findById(id);
     }
 
-    public void guardar(Autor autor) throws Exception{
+    public void guardar(Autor autor) {
         autorCrud.save(autor);
     }
 

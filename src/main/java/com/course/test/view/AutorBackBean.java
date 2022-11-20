@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Scope(value = "session")
 @Component
@@ -21,6 +22,7 @@ public class AutorBackBean implements Serializable {
     private String variable = "Hola mundo";
     private AutorService autorService;
     private Autor autor = new Autor();
+    private List<Autor> lstAutores;
 
     @Autowired
     public AutorBackBean(AutorService autorService) {
@@ -37,22 +39,24 @@ public class AutorBackBean implements Serializable {
             autorService.guardar(autor);
             if (autor.getId() != null) {
                 System.out.println("Guardado");
-                displayMessage();
+                //displayMessage();
                 //addMessage(FacesMessage.SEVERITY_INFO, "Información", "Guardado correctamente");
             }
             limpiar();
         } catch (Exception e) {
-            addMessage(FacesMessage.SEVERITY_WARN, "Excepción", e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
+            //addMessage(FacesMessage.SEVERITY_WARN, "Excepción", e.getMessage());
         }
     }
 
     public void limpiar() {
         autor = new Autor();
+        autor.setEstado(true);
     }
 
     public void displayMessage(){
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        facesContext.addMessage(null, new FacesMessage("Login Successfuly", "Welcome: "));
+        facesContext.addMessage(null, new FacesMessage("Login Successfuly", "Welcome:"));
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {

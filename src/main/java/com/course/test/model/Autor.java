@@ -12,6 +12,7 @@ public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "au_id")
     private Integer id;
     @Column(name = "au_fname")
     private String nombre;
