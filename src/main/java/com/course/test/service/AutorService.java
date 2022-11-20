@@ -34,5 +34,9 @@ public class AutorService {
         autorCrud.deleteById(id);
     }
 
+    public List<Autor> wsLstAutores() {
+        return autorCrud.lstWsAutores();
+    }
+
 
 }

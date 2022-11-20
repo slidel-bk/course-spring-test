@@ -15,7 +15,7 @@ public class AutorDaoImpl implements AutorDao {
 
     private RestTemplate restTemplate;
 
-    private final String URI_ROOT = "http://localhost:8091/custom/autor/";
+    private final String URL_ROOT = "http://localhost:8092/autores/";
 
     @Autowired
     public AutorDaoImpl(RestTemplate restTemplate) {
@@ -23,8 +23,8 @@ public class AutorDaoImpl implements AutorDao {
     }
 
     @Override
-    public List<Autor> lstAutores() {
-        ResponseEntity<Autor[]> responseEntity = restTemplate.getForEntity(URI_ROOT+"listado", Autor[].class);
+    public List<Autor> lstWsAutores() {
+        ResponseEntity<Autor[]> responseEntity = restTemplate.getForEntity(URL_ROOT+"autores", Autor[].class);
         return Arrays.asList(responseEntity.getBody());
     }
 }

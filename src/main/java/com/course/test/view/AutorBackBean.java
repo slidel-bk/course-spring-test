@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Scope(value = "session")
 @Component
@@ -32,35 +34,32 @@ public class AutorBackBean implements Serializable {
     @PostConstruct
     public void init() {
         autor.setEstado(true);
+        obtenerAutoresWS();
+    }
+
+    public void obtenerAutoresWS() {
+        try {
+            lstAutores = autorService.wsLstAutores().stream().sorted(Comparator.comparingInt(Autor::getId).reversed()).collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error: " + e.getMessage());
+        }
     }
 
     public void guardar() {
         try {
             autorService.guardar(autor);
             if (autor.getId() != null) {
+                obtenerAutoresWS();
                 System.out.println("Guardado");
-                //displayMessage();
-                //addMessage(FacesMessage.SEVERITY_INFO, "Información", "Guardado correctamente");
             }
             limpiar();
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
-            //addMessage(FacesMessage.SEVERITY_WARN, "Excepción", e.getMessage());
         }
     }
 
     public void limpiar() {
         autor = new Autor();
         autor.setEstado(true);
-    }
-
-    public void displayMessage(){
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        facesContext.addMessage(null, new FacesMessage("Login Successfuly", "Welcome:"));
-    }
-
-    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().
-                addMessage(null, new FacesMessage(severity, summary, detail));
     }
 }

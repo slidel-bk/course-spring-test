@@ -3,7 +3,7 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns="http://www.w3.org/1999/xhtml">
     <h:head>
-        <title>Eso es!</title>
+        <title>Autores</title>
     </h:head>
     <h:body>
         <style type="text/css">
@@ -16,7 +16,7 @@
         </style>
 
         <h:form id="frmPrincipal">
-            <p:growl id="growl" showDetail="true" sticky="true"/>
+            <p:growl id="growl"  sticky="true"/>
             <p:panel header="Autores"
                      style="width:1000px;
                             margin-left:auto;
@@ -24,34 +24,37 @@
                 <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder custom-padding"
                              columnClasses="ui-grid-col-2,ui-grid-col-4">
                     <p:outputLabel value="Nombre:*"/>
-                    <p:inputText value="#{autorBackBean.autor.nombre}" maxlength="20"
-                                 style="width:92%;text-transform:upper;"/>
+                    <p:inputText id="nombre" value="#{autorBackBean.autor.nombre}" maxlength="20"
+                                 style="width:92%; text-transform:uppercase;" required="true"
+                                 requiredMessage="Nombre: requerido"/>
 
                     <p:outputLabel value="Apellido:*"/>
                     <p:inputText value="#{autorBackBean.autor.apellido}" maxlength="40"
-                                 style="width:93%;text-transform:upper;"/>
+                                 style="width:93%;text-transform:uppercase;" required="true"
+                                 requiredMessage="Apellido: requerido"/>
 
                     <p:outputLabel value="Telefono:*"/>
                     <p:inputText value="#{autorBackBean.autor.telefono}" maxlength="8"
-                                 style="width:92%;text-transform:upper;"/>
+                                 style="width:92%;text-transform:uppercase;" required="true"
+                                 requiredMessage="Telefono: requerido"/>
 
                     <p:outputLabel value="Código postal:"/>
                     <p:inputText value="#{autorBackBean.autor.codigoPostal}" maxlength="5"
-                                 style="width:93%;text-transform:upper;"/>
+                                 style="width:93%;text-transform:uppercase;"/>
 
                     <p:outputLabel value="Departamento:"/>
-                    <p:inputText maxlength="20" value="#{autorBackBean.autor.ciudad}"
-                                 style="width:92%;text-transform:upper;"/>
+                    <p:inputText maxlength="20" value="#{autorBackBean.autor.departamento}"
+                                 style="width:92%;text-transform:uppercase;"/>
 
                     <p:outputLabel value="Ciudad:"/>
-                    <p:inputText value="#{autorBackBean.autor.departamento}" maxlength="20"
-                                 style="width:93%;text-transform:upper;"/>
+                    <p:inputText value="#{autorBackBean.autor.ciudad}" maxlength="20"
+                                 style="width:93%;text-transform:uppercase;"/>
                 </p:panelGrid>
 
                 <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder custom-padding"
                              columnClasses="ui-grid-col-2,ui-grid-col-10">
                     <p:outputLabel value="Dirección:"/>
-                    <p:inputTextarea rows="2" style="width:98%;text-transform:upper;"
+                    <p:inputTextarea rows="2" style="width:98%;text-transform:uppercase;"
                                      value="#{autorBackBean.autor.direccion}"/>
                 </p:panelGrid>
 
@@ -59,37 +62,41 @@
                              columnClasses="ui-grid-col-2,ui-grid-col-10">
                     <p:outputLabel value="Estado:"/>
                     <p:selectBooleanButton onLabel="Si" offLabel="No" style="width:5rem"
-                                           value="#{autorBackBean.autor.estado}"/>
+                                           value="#{autorBackBean.autor.estado}"
+                                           disabled="#{autorBackBean.autor.id == null}"/>
                 </p:panelGrid>
 
                 <p:outputPanel deferred="true" style="text-align:center">
                     <p:commandButton value="Guardar" actionListener="#{autorBackBean.guardar()}"
                                      process="frmPrincipal" update="frmPrincipal growl"/>
-                    <p:commandButton value="Limpiar" style="margin-left:5px;"
+                    <p:commandButton value="Limpiar" style="margin-left:5px;" process="@this"
                                      actionListener="#{autorBackBean.limpiar()}"
                                      update="frmPrincipal"/>
                 </p:outputPanel>
 
                 <div class="card" style="margin-top:15px;">
-                    <p:dataTable id="autores" var="aut">
+                    <p:dataTable id="autores" var="aut" value="#{autorBackBean.lstAutores}" rows="10"
+                                 paginator="true" paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros">
                         <p:column headerText="Nombre Autor">
-                            <h:outputText value="" />
+                            <h:outputText value="#{aut.apellido} #{aut.nombre}" />
                         </p:column>
 
                         <p:column headerText="Telefono">
-                            <h:outputText value="" />
+                            <h:outputText value="#{aut.telefono}" />
                         </p:column>
 
                         <p:column headerText="Departamento">
-                            <h:outputText value="" />
+                            <h:outputText value="#{aut.departamento}" />
                         </p:column>
 
-                        <p:column headerText="Municipio">
-                            <h:outputText value="" />
+                        <p:column headerText="Ciudad">
+                            <h:outputText value="#{aut.ciudad}" />
                         </p:column>
 
-                        <p:column headerText="Estado">
-                            <h:outputText value="" />
+                        <p:column headerText="Estado" style="text-align:center;">
+                            <p:selectBooleanCheckbox value="#{aut.estado}" disabled="true"/>
                         </p:column>
                     </p:dataTable>
                 </div>
